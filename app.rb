@@ -38,10 +38,10 @@ class AvailabilityWidget < Sinatra::Application
       "Free now."
     elsif event.dtstart < now && event.dtend > now
       seconds = (event.dtend - now)
-      "#{summary} for #{ChronicDuration.output(seconds.to_i, units: 1)}."
+      "#{event.summary} for #{ChronicDuration.output(seconds.to_i, units: 1)}."
     elsif event.dtstart > now
       seconds = (event.dtstart - now)
-      "Free now. #{summary} in #{ChronicDuration.output(seconds.to_i, units: 1)}."
+      "Free now. #{event.summary} in #{ChronicDuration.output(seconds.to_i, units: 1)}."
     end
   end
 
