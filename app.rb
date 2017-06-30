@@ -8,6 +8,8 @@ People = Google::Apis::PeopleV1
 class AvailabilityWidget < Sinatra::Application
   set :protection, except: :frame_options
 
+  ERROR_EMOJI = "&#9888;"
+
   def initialize
     super
     @plus = People::PeopleServiceService.new
@@ -54,7 +56,11 @@ class AvailabilityWidget < Sinatra::Application
     headers "Refresh" => "120"
     image = get_avatar google_id
     name = address.split('@').first.split('.').map(&:capitalize).join(' ')
-    status = format_status get_next_meeting_info address, calendar_url
+    status = begin
+      format_status get_next_meeting_info address, calendar_url
+    rescue
+      "#{ERROR_EMOJI} Set calendar to public (full or free/busy)."
+    end
     haml :widget, locals: {:avatar => image, :name => name, :status => status}
   end
 
