@@ -36,7 +36,7 @@ class AvailabilityWidget < Sinatra::Application
     elsif dtstart > now
       seconds = (dtstart - now)*24*60*60
       "Free now. #{summary} in #{ChronicDuration.output(seconds.to_i, units: 1)}."
-  end
+    end
   end
 
   def retrieve_calendar calendar_url
@@ -45,6 +45,7 @@ class AvailabilityWidget < Sinatra::Application
   end
 
   get '/:address/' do |address|
+    headers "Refresh" => "120"
     image = get_avatar params['google']
     name = address.split('@').first.split('.').map(&:capitalize).join(' ')
     dtstart, dtend, summary = get_next_meeting_info "https://calendar.google.com/calendar/ical/#{address}/public/basic.ics"
