@@ -8,9 +8,4 @@ h1 { margin-top: 0; margin-bottom: 0.5em; font-size: 3em; }
 .widget
   %img{:src => avatar}
   %h1= name
-  .status
-    %time= dtstart.strftime('%H:%M')
-    &ndash;
-    %time= dtend.strftime('%H:%M')
-    &colon;
-    = summary
+  .status= status
