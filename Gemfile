@@ -4,5 +4,5 @@ source "https://rubygems.org"
 gem 'sinatra'
 gem 'google-api-client'
 gem 'haml'
-gem 'icalendar'
+gem 'vpim'
 gem 'chronic_duration'

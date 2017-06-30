@@ -28,7 +28,6 @@ GEM
       temple (>= 0.8.0)
       tilt
     httpclient (2.8.3)
-    icalendar (2.4.1)
     jwt (1.5.6)
     little-plugger (1.1.4)
     logging (2.2.2)
@@ -65,6 +64,7 @@ GEM
     temple (0.8.0)
     tilt (2.0.7)
     uber (0.1.0)
+    vpim (13.11.11)
 
 PLATFORMS
   x86-mingw32
@@ -73,8 +73,8 @@ DEPENDENCIES
   chronic_duration
   google-api-client
   haml
-  icalendar
   sinatra
+  vpim
 
 BUNDLED WITH
    1.15.1
