@@ -3,5 +3,5 @@ applications:
 - name: availability-widget
   buildpack: ruby_buildpack
   command: bundle exec ruby ./app.rb -p 80 -o 0.0.0.0
-  memory: 128MB
+  memory: 512MB
   instances: 1
