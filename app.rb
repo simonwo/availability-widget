@@ -26,7 +26,7 @@ class AvailabilityWidget < Sinatra::Application
   def get_next_meeting_info address, calendar_url
     calendar = retrieve_calendar calendar_url
     now = Time.now
-    event = calendar.reject {|e| e.dtend < now }.sort_by(&:dtstart).reject {|e| attendee_declined? e, "mailto:#{address}"}.first
+    event = calendar.reject {|e| e.dtend.nil? || e.dtend < now }.sort_by(&:dtstart).reject {|e| attendee_declined? e, "mailto:#{address}"}.first
     return event
   end
 
