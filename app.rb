@@ -9,6 +9,7 @@ class AvailabilityWidget < Sinatra::Application
   set :protection, except: :frame_options
 
   ERROR_EMOJI = "&#9888;"
+  DEFAULT_REFRESH_TIME = 300
 
   def initialize
     super
@@ -34,16 +35,16 @@ class AvailabilityWidget < Sinatra::Application
     event.attendees.select {|a| a.uri == uri }.any? {|a| a.partstat == "DECLINED" }
   end
 
-  def format_status event
+  def format_meeting event
     now = Time.now
     if event.nil?
-      "Free now."
+      return "Free now.", DEFAULT_REFRESH_TIME
     elsif event.dtstart < now && event.dtend > now
       seconds = (event.dtend - now)
-      "#{event.summary} for #{ChronicDuration.output(seconds.to_i, units: 1)}."
+      return "#{event.summary} for #{ChronicDuration.output(seconds.to_i, units: 1)}.", [seconds, DEFAULT_REFRESH_TIME].min
     elsif event.dtstart > now
       seconds = (event.dtstart - now)
-      "Free now. #{event.summary} in #{ChronicDuration.output(seconds.to_i, units: 1)}."
+      return "Free now. #{event.summary} in #{ChronicDuration.output(seconds.to_i, units: 1)}.", [seconds, DEFAULT_REFRESH_TIME].min
     end
   end
 
@@ -53,14 +54,14 @@ class AvailabilityWidget < Sinatra::Application
   end
 
   def render_widget address, calendar_url, google_id
-    headers "Refresh" => "120"
     image = get_avatar google_id
     name = address.split('@').first.split('.').map(&:capitalize).join(' ')
-    status = begin
-      format_status get_next_meeting_info address, calendar_url
+    status, refresh_time = begin
+      format_meeting get_next_meeting_info address, calendar_url
     rescue
-      "#{ERROR_EMOJI} Set calendar to public (full or free/busy)."
+      ["#{ERROR_EMOJI} Set calendar to public (full or free/busy).", DEFAULT_REFRESH_TIME]
     end
+    headers "Refresh" => refresh_time.to_s
     haml :widget, locals: {:avatar => image, :name => name, :status => status}
   end
 
