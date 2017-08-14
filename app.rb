@@ -3,6 +3,8 @@ require 'google/apis/people_v1'
 require 'net/http'
 require 'vpim/icalendar'
 require 'chronic_duration'
+require 'digest/crc24'
+require 'color'
 People = Google::Apis::PeopleV1
 
 class AvailabilityWidget < Sinatra::Application
@@ -53,16 +55,24 @@ class AvailabilityWidget < Sinatra::Application
       Vpim::Icalendar.decode(calendars).first
   end
 
+  def get_colors address
+    background = Color::RGB.from_html Digest::CRC24.hexdigest address
+    foreground = background.to_hsl.brightness > 0.5 ? Color::CSS['black'] : Color::CSS['white']
+    [background, foreground]
+  end
+
   def render_widget address, calendar_url, google_id
     image = get_avatar google_id
     name = address.split('@').first.split('.').map(&:capitalize).join(' ')
+    initial = name.chars.first.upcase
+    background, foreground = get_colors address
     status, refresh_time = begin
       format_meeting get_next_meeting_info address, calendar_url
     rescue
       ["#{ERROR_EMOJI} Set calendar to public (full or free/busy).", DEFAULT_REFRESH_TIME]
     end
     headers "Refresh" => refresh_time.to_s
-    haml :widget, locals: {:avatar => image, :name => name, :status => status}
+    haml :widget, locals: {:avatar => image, :name => name, :initial => initial, :status => status, :background => background, :foreground => foreground}
   end
 
   get '/:address/' do |address|

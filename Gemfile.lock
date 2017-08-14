@@ -5,8 +5,10 @@ GEM
       public_suffix (~> 2.0, >= 2.0.2)
     chronic_duration (0.10.6)
       numerizer (~> 0.1.1)
+    color (1.8)
     declarative (0.0.9)
     declarative-option (0.1.0)
+    digest-crc (0.4.1)
     faraday (0.12.1)
       multipart-post (>= 1.2, < 3)
     google-api-client (0.13.0)
@@ -71,6 +73,8 @@ PLATFORMS
 
 DEPENDENCIES
   chronic_duration
+  color
+  digest-crc
   google-api-client
   haml
   sinatra
