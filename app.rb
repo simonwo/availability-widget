@@ -5,6 +5,7 @@ require 'vpim/icalendar'
 require 'chronic_duration'
 require 'digest/crc24'
 require 'color'
+require_relative 'lib/extensions'
 People = Google::Apis::PeopleV1
 
 class AvailabilityWidget < Sinatra::Application

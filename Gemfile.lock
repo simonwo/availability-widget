@@ -64,7 +64,12 @@ GEM
       rack-protection (= 2.0.0)
       tilt (~> 2.0)
     temple (0.8.0)
+    thread_safe (0.3.6)
     tilt (2.0.7)
+    tzinfo (1.2.3)
+      thread_safe (~> 0.1)
+    tzinfo-data (1.2017.2)
+      tzinfo (>= 1.0.0)
     uber (0.1.0)
     vpim (13.11.11)
 
@@ -78,6 +83,8 @@ DEPENDENCIES
   google-api-client
   haml
   sinatra
+  tzinfo
+  tzinfo-data
   vpim
 
 BUNDLED WITH
