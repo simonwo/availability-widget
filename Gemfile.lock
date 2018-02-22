@@ -41,12 +41,12 @@ GEM
     mime-types-data (3.2016.0521)
     multi_json (1.12.1)
     multipart-post (2.0.0)
-    mustermann (1.0.0)
+    mustermann (1.0.2)
     numerizer (0.1.1)
     os (0.9.6)
     public_suffix (2.0.5)
-    rack (2.0.3)
-    rack-protection (2.0.0)
+    rack (2.0.4)
+    rack-protection (2.0.1)
       rack
     representable (3.0.4)
       declarative (< 0.1.0)
@@ -58,10 +58,10 @@ GEM
       faraday (~> 0.9)
       jwt (~> 1.5)
       multi_json (~> 1.10)
-    sinatra (2.0.0)
+    sinatra (2.0.1)
       mustermann (~> 1.0)
       rack (~> 2.0)
-      rack-protection (= 2.0.0)
+      rack-protection (= 2.0.1)
       tilt (~> 2.0)
     temple (0.8.0)
     thread_safe (0.3.6)
@@ -82,10 +82,10 @@ DEPENDENCIES
   digest-crc
   google-api-client
   haml
-  sinatra
+  sinatra (> 2.0.0)
   tzinfo
   tzinfo-data
   vpim
 
 BUNDLED WITH
-   1.15.1
+   1.16.1
